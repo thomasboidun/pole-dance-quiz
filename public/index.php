@@ -1,4 +1,4 @@
-<?php
+<?php // Front Controller
 
 use App\Kernel;
 use Symfony\Component\Dotenv\Dotenv;

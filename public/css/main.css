@@ -1,0 +1,48 @@
+@media screen and (min-width: 0) {
+  * {
+    box-sizing: border-box;
+    margin    : 0;
+    padding   : 0;
+  }
+
+  html {
+    font-size: 1em;
+  }
+
+  .main {
+    display       : flex;
+    flex-direction: column;
+
+    min-height: calc(100vh - 35.99px);
+    height    : calc(100vh - 35.99px);
+    max-height: calc(100vh - 35.99px);
+
+    min-width: 100%;
+    width    : 100%;
+    max-width: 100%;
+
+    overflow: hidden;
+  }
+
+  .background {
+    height  : 100%;
+    width   : 100%;
+    position: absolute;
+    top     : 0;
+    left    : 0;
+    z-index : 0;
+    margin  : 0;
+  }
+
+  .background>img {
+    height    : 100%;
+    width     : 100%;
+    object-fit: cover;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .background>img {
+    object-fit: contain;
+  }
+}

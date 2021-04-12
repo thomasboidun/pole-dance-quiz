@@ -1,0 +1,48 @@
+@media screen and (min-width: 0) {
+  #subscribe {
+    height          : 100%;
+    width           : 100%;
+    position        : relative;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    color           : #EEE;
+    background-color: rgb(240, 240, 240);
+    background-image: url('../img/paper-texture.png');
+    padding         : 0;
+  }
+
+  #subscribe .container {
+    position: relative;
+    z-index : 1;
+  }
+
+  #subscribe form[name="subscriber"] {
+    width: 100%;
+  }
+
+  #subscribe .form-wrapper {
+    display    : flex;
+    align-items: flex-end;
+  }
+
+  #subscribe .form-wrapper .form-group:first-child {
+    flex: 1;
+  }
+
+  #subscribe .form-wrapper .form-group:first-child .form-control {
+    border-top-right-radius   : 0;
+    border-bottom-right-radius: 0;
+  }
+
+  #subscribe .form-wrapper .form-group:last-child .btn {
+    border-top-left-radius   : 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  #subscribe {
+    font-size: 1.5rem;
+  }
+}

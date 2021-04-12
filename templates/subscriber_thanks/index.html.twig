@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Subscribe now!{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset("css/subscribe.css")}}" /> {% endblock %}
+
+{% block body %}
+<section id="subscribe" class="container-fluid">
+
+  <figure class="background">
+    <img src="{{ asset("img/ovelhapole_B.png")}}" alt="pole dance figure">
+  </figure>
+
+  <div class="container" style="max-width:720px;">
+    <h1>A pole dance quiz is coming soon!</h1>
+
+    <p>
+      Thank you for your subscription {{ subscriber_email }}. <br />
+      We will contact you soon! <br />
+      <br />
+      <a class="btn btn-primary" href="{{ path('subscribe') }}">Go home</a>
+    </p>
+  </div>
+
+</section>
+{% endblock %}
