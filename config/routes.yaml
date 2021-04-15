@@ -1,7 +1,0 @@
-app_subscribe:
-    path: /subscribe
-    controller: App\Controller\SubscriberController::show_the_subscribe_page
-
-app_subscribe_check:
-  path: /subscribe/check/{id}
-  controller: App\Controller\SubscriberController::check_the_subscriber

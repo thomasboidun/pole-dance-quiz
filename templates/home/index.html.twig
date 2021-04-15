@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset("css/home.css")}}" /> {% endblock %}
+
+{% block body %}
+<section id="home" class="wrapper container-fluid">
+  <figure class="background">
+    <img src="{{ asset("img/ovelhapole_B.png")}}" alt="pole dance figure">
+  </figure>
+
+  <div class="container" style="max-width:720px;">
+    <div class="mb-5">
+      <h1>Welcome!</h1>
+      <p>
+        To all the fan of pole dance (or not), <br />
+        test your knowledge on the figures of this sport mixing dance and acrobatics with this online quiz.
+      </p>
+      <p class="text-right">Have fun!</p>
+    </div>
+
+      <div>
+        <h2 class="text-center mb-5">Are you ready for the pole dance quiz?</h2>
+        <div class="d-flex align-items-center justify-content-around">
+          <div class="d-flex flex-column align-items-center justify-content-center">
+            <p>Yes! I'm ready!</p>
+            <a href="{{ path('quiz') }}" class="btn btn-primary ml-3">Start the quiz!</a>
+          </div>
+          <div class="d-flex flex-column align-items-center justify-content-center">
+            <p>Mmm no...</p>
+            <a class="btn btn-primary" href="http://poledancedictionary.com/" target="_blank">Show dictionary</a>
+          </div>
+        </div>
+      </div>
+
+
+  </div>
+
+    
+</section>
+{% endblock %}

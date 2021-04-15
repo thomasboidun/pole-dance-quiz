@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset("css/dashboard.css")}}" /> {% endblock %}
+
+{% block body %}
+<section id="dashboard" class="wrapper container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/dashboard">Dashboard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link {% if entity == 'move' %} active {% endif %}" aria-current="page" href="/dashboard/move">Move</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if entity == 'category' %} active {% endif %}" href="/dashboard/category">Category</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if entity == 'difficulty' %} active {% endif %}" href="/dashboard/difficulty">Difficulty</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {% if entity %}
+    <article class="w-100 p-5" style="max-width: 500px;">
+      <h2>Add {{ entity }}</h2>
+      {{ form_start(form) }}
+      {{ form_end(form) }}
+    </article>
+  {% endif %}
+</section>
+{% endblock %}

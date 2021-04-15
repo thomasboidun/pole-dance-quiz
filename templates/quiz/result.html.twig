@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pole Dance Quiz{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset("css/result.css")}}" /> {% endblock %}
+
+{% block body %}
+
+<section id="result" class="wrapper container-fluid">
+
+  {# <figure class="background">
+    <img src="{{ asset("img/ovelhapole_B.png")}}" alt="pole dance figure">
+  </figure> #}
+
+  <div class="container py-5">
+    <h1>Result: {{ score }}</h1>
+    <table class="table">
+      <thead>
+        <tr class="table-dark">
+          <th scope="col">#</th>
+          <th scope="col">Your reply</th>
+          <th scope="col">Good reply</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set i = 0 %}
+        {% for move in moves %}
+        <tr 
+        {% if move.id == replies[i].id %} class="table-primary"
+        {% else %} class="table-danger" {% endif %}>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ replies[i].name }}</td>
+          <td>{{ move.name }}</td>
+        </tr>
+
+          {% set i = i + 1 %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</section>
+{% endblock %}

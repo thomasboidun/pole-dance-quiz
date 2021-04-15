@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pole Dance Quiz{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset("css/quiz.css")}}" /> {% endblock %}
+{% block javascripts %}<script src="{{ asset("js/quiz.js")}}" /> {% endblock %}
+
+{% block body %}
+
+<section id="quiz" class="wrapper container-fluid">
+
+  <figure class="background">
+    <img src="{{ asset("img/ovelhapole_B.png")}}" alt="pole dance figure">
+  </figure>
+
+  <div class="container" style="max-width:720px;">
+    <h1 class="mb-3 d-flex align-items-center justify-content-between">
+      Pole Dance Quizz
+      <span class="small">
+        <span class="current-question">1</span>/{{ nbrQuestions }}
+      </span>
+    </h1>
+
+    <div id="pole-dance-quiz" data-quiz-id="{{ quiz.getId }}" data-nbr-questions="{{ nbrQuestions }}">
+      <div class="quiz-inner" data-current-question="1">
+        {% set i = 0 %}
+        {% for move in moves %}
+        <div class="quiz-item">
+          <p class="text-center mb-0">What is the name of this move ?</p>
+          
+          <video autoplay="autoplay" loop="loop" muted="true" class="w-100 rounded">
+            Sorry, your browser doesn't support embedded videos.
+            <source src="{{ move.getVideoUri }}" />
+          </video>
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
+              {% for choice in quiz.choices[i] %}
+              <input type="radio" class="btn-check" name="question{{i + 1}}" id="question{{i + 1}}-choice{{ loop.index }}" value="{{ choice.id }}" autocomplete="off">
+              <label class="btn btn-outline-primary" for="question{{i + 1}}-choice{{ loop.index }}">{{ choice.name }}</label>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% set i = i + 1 %}
+        {% endfor %}
+      </div>
+      <div class="d-flex align-items-center justify-content-center mt-3">
+        <button type="button" id="submit-reply" class="btn btn-danger">Submit</button>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

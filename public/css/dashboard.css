@@ -1,0 +1,14 @@
+@media screen and (min-width: 0) {
+  #dashboard.wrapper {
+    align-items    : flex-start;
+    justify-content: flex-start;
+    flex-direction : column;
+    color          : rgba(0, 0, 0, .9);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  #dashboard.wrapper {
+    font-size: 1rem;
+  }
+}

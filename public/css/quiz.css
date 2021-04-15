@@ -1,0 +1,28 @@
+@media screen and (min-width: 0) {
+  #pole-dance-quiz {
+    min-width: 100%;
+    width    : 100%;
+    max-width: 100%;
+    overflow : hidden;
+  }
+
+  #pole-dance-quiz .quiz-inner {
+    display: flex;
+
+    position: relative;
+    left    : 0;
+
+    transition: left .5s ease-in-out;
+  }
+
+  #pole-dance-quiz .quiz-inner .quiz-item {
+    min-width: 100%;
+    width    : 100%;
+    max-width: 100%;
+  }
+
+  #pole-dance-quiz .quiz-inner .quiz-item .btn-group-vertical {
+    border-radius   : .25em;
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+}

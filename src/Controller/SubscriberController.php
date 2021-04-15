@@ -54,14 +54,17 @@ class SubscriberController extends AbstractController
 
     if ($id) {
       $repository = $this->getDoctrine()->getRepository(Subscriber::class);
+
       $subscriber = $repository->find($id);
+
+      if(!$subscriber) {
+        return $this->redirectToRoute('subscribe');
+      }
+
+      $subscriber->setIsChecked(true);
       
       $em = $this->getDoctrine()->getManager();
-      $subscriber->setIsChecked(true);
-
       $em->flush();
-
-
 
       return $this->render('subscriber_thanks/index.html.twig', [
         'subscriber_email' => $subscriber->getEmail()
