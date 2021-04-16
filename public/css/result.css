@@ -7,12 +7,12 @@
     overflow-y: scroll;
   }
 
-  #result .container>.d-flex>.form-control {
+  #result .container>form>.d-flex>.form-control {
     border-top-right-radius   : 0;
     border-bottom-right-radius: 0;
   }
 
-  #result .container>.d-flex>.btn {
+  #result .container>form>.d-flex>.btn {
     border-top-left-radius   : 0;
     border-bottom-left-radius: 0;
   }

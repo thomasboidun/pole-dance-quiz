@@ -12,8 +12,11 @@
     <img src="{{ asset("img/ovelhapole_B.png")}}" alt="pole dance figure">
   </figure>
 
-  <div class="container py-5" style="max-width:720px;">
-    <h1>Scoreboard</h1>
+  <div class="container py-5 no-bar" style="max-width:720px;">
+    <div class="d-flex justify-content-between">
+      <h1>Scoreboard</h1>
+      <a href="{{ path('home')}}" class="btn btn-link mb-3">Go home</a>
+    </div>
 
     <table class="table">
       <thead>
@@ -28,7 +31,7 @@
         <tr class="table-light">
           <th scope="row">{{ loop.index }}</th>
           <td>{{ quiz.getPlayer }}</td>
-          <td>{{ quiz.getScore }} pt.</td>
+          <td>{{ quiz.getScore }}pt.</td>
         </tr>
         {% endfor %}
       </tbody>
