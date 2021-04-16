@@ -5,8 +5,16 @@
     max-height: 100%;
 
     overflow-y: scroll;
+  }
 
-    color: rgba(0, 0, 0, .9);
+  #result .container>.d-flex>.form-control {
+    border-top-right-radius   : 0;
+    border-bottom-right-radius: 0;
+  }
+
+  #result .container>.d-flex>.btn {
+    border-top-left-radius   : 0;
+    border-bottom-left-radius: 0;
   }
 }
 

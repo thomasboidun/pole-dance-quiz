@@ -8,12 +8,20 @@
 
 <section id="result" class="wrapper container-fluid">
 
-  {# <figure class="background">
+  <figure class="background">
     <img src="{{ asset("img/ovelhapole_B.png")}}" alt="pole dance figure">
-  </figure> #}
+  </figure>
 
   <div class="container py-5">
-    <h1>Result: {{ score }}</h1>
+    <p>
+      You have scored {{score}} point{% if score > 1%}s{% endif %}! <a href="{{path('start_quiz')}}">Try again?</a>
+    </p>
+    <form method="POST">
+      <div class="d-flex">
+        <input type="text" name="player" id="player" placeholder="Enter your player name" class="form-control mb-3">
+        <button type="submit" class="btn btn-primary mb-3">Save</button>
+      </div>
+    </form>
     <table class="table">
       <thead>
         <tr class="table-dark">

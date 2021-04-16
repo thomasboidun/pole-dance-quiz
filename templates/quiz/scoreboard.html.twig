@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Scoreboard{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset("css/scoreboard.css")}}" /> {% endblock %}
+
+{% block body %}
+
+<section id="scoreboard" class="wrapper container-fluid">
+
+  <figure class="background">
+    <img src="{{ asset("img/ovelhapole_B.png")}}" alt="pole dance figure">
+  </figure>
+
+  <div class="container py-5" style="max-width:720px;">
+    <h1>Scoreboard</h1>
+
+    <table class="table">
+      <thead>
+        <tr class="table-dark">
+          <th scope="col">Ranking</th>
+          <th scope="col">Player</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for quiz in quizs %}
+        <tr class="table-light">
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ quiz.getPlayer }}</td>
+          <td>{{ quiz.getScore }} pt.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% endblock %}

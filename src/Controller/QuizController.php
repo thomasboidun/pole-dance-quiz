@@ -17,14 +17,18 @@ use Symfony\Component\HttpFoundation\Request;
 class QuizController extends AbstractController
 {
   /**
-   * @Route("/quiz", name="quiz")
+   * @Route(
+   *  "/quiz/start", 
+   *  name="start_quiz",
+   *  condition="context.getMethod() in ['GET']"
+   * )
    */
-  public function start_quiz(Request $request, MoveRepository $moveRepository, QuizRepository $quizRepository): Response
+  public function start(MoveRepository $moveRepository): Response
   {
     $moves = $moveRepository->findAll();
     shuffle($moves);
 
-    $moves = array_slice($moves, 0, 3, false);
+    $moves = array_slice($moves, 0, 10, false);
 
     $quiz = new Quiz();
 
@@ -56,40 +60,98 @@ class QuizController extends AbstractController
   }
 
   /**
-   * @Route("/quiz/{id}", name="quiz_result")
+   * @Route(
+   *  "/quiz/{id}/send-replies", 
+   *  name="send_quiz_replies",
+   *  condition="context.getMethod() in ['POST']"
+   * )
    */
-  public function show_result(int $id = null, Request $request, QuizRepository $quizRepository): Response
+  public function send_replies(int $id = null, Request $request): Response
   {
+    $quiz = $this->findQuizById($id);
+
+    $replies = $this->convertJSONRepliesToObjectReplies($request->toArray());
+
+    $score = $this->generateScore($quiz->getMoves(), $replies);
+
+    $entityManager = $this->getDoctrine()->getManager();
+
+    $quiz->setReplies($replies)->setScore($score);
+
+    $entityManager->flush();
+
+    $response =  new Response();
+    $response->setContent($quiz->getScore());
+    $response->headers->set('Content-Type', 'application/json');
+    $response->setStatusCode(Response::HTTP_OK);
+    return $response->send();
+  }
+
+  /**
+   * @Route(
+   *  "/quiz/{id}/show_result", 
+   *  name="show_quiz_result",
+   *  condition="context.getMethod(['GET'])"
+   * )
+   */
+  public function show_result(int $id = null, Request $request): Response
+  {
+    $quiz = $this->findQuizById($id);
+
+    if($request->isMethod('POST') && isset($_POST['player'])) {
+      $quiz->setPlayer($_POST['player']);
+
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->flush();
+
+      return $this->redirectToRoute('quiz_scoreboard');
+    }
+
+    return $this->render('quiz/result.html.twig', [
+      'quiz_id' => $quiz->getId(),
+      'maxScore' => $this->getMaxScore(count($quiz->getMoves())),
+      'score' => $quiz->getScore(),
+      'moves' => $quiz->getMoves(),
+      'replies' => $quiz->getReplies(),
+    ]);
+  }
+
+  /**
+   * @Route(
+   *  "/quiz/scoreboard", 
+   *  name="quiz_scoreboard",
+   *  condition="context.getMethod(['GET'])"
+   * )
+   */
+  public function show_scoreboard(QuizRepository $quizRepository)
+  {
+    $quizs = $quizRepository->findAll();
+
+    usort($quizs, function($a, $b) {
+      if($a->getScore() == $b->getScore()) {
+        return 0;
+      } else if ($a->getScore() > $b->getScore()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+
+    return $this->render('quiz/scoreboard.html.twig', [
+      'quizs' => $quizs
+    ]);
+  }
+
+  private function findQuizById(int $id): Quiz
+  {
+    $quizRepository = $this->getDoctrine()->getManager()->getRepository(Quiz::class);
     $quiz = $quizRepository->find(intval($id, 10));
 
     if (!$quiz) {
       throw $this->createNotFoundException('No quiz found for id ' . $id);
     }
 
-    if ($request->isMethod('POST')) {
-      $em = $this->getDoctrine()->getManager();
-      $replies = $this->convertBodyContent($request->toArray());
-      $score = $this->generateScore($quiz->getMoves(), $replies);
-      $quiz->setReplies($replies)
-        ->setScore($score);
-      $em->flush();
-
-      // generate response
-      $response =  new Response();
-      $response->setContent(json_encode([
-        'quiz_id' => $quiz->getId(),
-        'score' => $score
-      ]));
-      $response->headers->set('Content-Type', 'application/json');
-      $response->setStatusCode(Response::HTTP_OK);
-      return $response->send();
-    }
-
-    return $this->render('quiz/result.html.twig', [
-      'score' => $quiz->getScore(),
-      'moves' => $quiz->getMoves(),
-      'replies' => $quiz->getReplies(),
-    ]);
+    return $quiz;
   }
 
   private function setChoices(Move $move): array
@@ -133,7 +195,7 @@ class QuizController extends AbstractController
     return $choices;
   }
 
-  private function convertBodyContent(array $data): array
+  private function convertJSONRepliesToObjectReplies(array $data): array
   {
     foreach ($data as $key => $value) {
       $replies[] = (object) [
@@ -160,6 +222,19 @@ class QuizController extends AbstractController
         $bonus = 1;
       }
       $i++;
+    }
+
+    return $score;
+  }
+
+  private function getMaxScore(int $nbrQuestion)
+  {
+    $score = 0;
+    $bonus = 1;
+
+    for ($i = 0; $i < $nbrQuestion; $i++) {
+      $score += 1 * $bonus;
+      $bonus++;
     }
 
     return $score;

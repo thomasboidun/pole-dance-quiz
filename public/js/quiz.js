@@ -17,7 +17,7 @@ $(function () {
     console.log(replies);
     
     $.ajax({
-      url: "http://localhost:8000/quiz/" + quizId,
+      url: "http://localhost:8000/quiz/" + quizId + "/send-replies",
       method: 'POST',
       dataType: 'json',
       data: JSON.stringify(replies),
@@ -30,7 +30,7 @@ $(function () {
       },
       complete: function (result, status) {
         console.log(status, result);
-        window.location.href = "http://localhost:8000/quiz/" + quizId;
+        window.location.href = "http://localhost:8000/quiz/" + quizId + "/show_result";
       }
     });
   }
@@ -41,10 +41,10 @@ $(function () {
     const nbrQuestions = parseInt(quiz.dataset.nbrQuestions, 10);
     let currentQuestion = parseInt(inner.dataset.currentQuestion, 10);
 
-    inner.style.left = '-' + 100 * currentQuestion + '%';
-    button.setAttribute('disabled', 'disabled');
-
+    
     if (currentQuestion < nbrQuestions) {
+      inner.style.left = '-' + 100 * currentQuestion + '%';
+      button.setAttribute('disabled', 'disabled');
       currentQuestion++;
       inner.dataset.currentQuestion = currentQuestion;
       document.querySelector('.current-question').textContent = currentQuestion;
